@@ -66,4 +66,5 @@ class kb_metaQUASTTest(unittest.TestCase):
         # Check returned data with
         # self.assertEqual(ret[...], ...) or other unittest methods
         ret = self.serviceImpl.run_kb_metaQUAST(self.ctx, {'workspace_name': self.wsName,
-                                                             'parameter_1': 'Hello World!'})
+                                                             'parameter_1': 'Hello World!',
+                                                             'input_reads_ref': '76960/3/1'})

@@ -2,11 +2,13 @@
 #BEGIN_HEADER
 import logging
 import os
+import shutil
 
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.ReadsUtilsClient import ReadsUtils
 from .Utils.run_metaQUAST import run_metaQUAST
 from .Utils.createHtmlReport import HTMLReportCreator
+from .Utils.upload_reads import upload_reads
 #END_HEADER
 
 
@@ -54,8 +56,17 @@ class kb_metaQUAST:
         # ctx is the context object
         # return variables are: output
         #BEGIN run_kb_metaQUAST
-        # logging.info('Running run_kb_metaQUAST with params=' + str(params))
-        # logging.info('Downloading reads from ' + params['input_reads_ref'])
+        logging.info('Running run_kb_metaQUAST with params=' + str(params))
+        logging.info('Downloading reads from ' + params['input_reads_ref'])
+
+        ru = ReadsUtils(self.callback_url)
+        input_file_info = ru.download_reads({'read_libraries': [params['input_reads_ref']],
+                                             'interleaved': 'true'})['files'][params['input_reads_ref']]
+        logging.info('Downloaded reads from ' + str(input_file_info))
+
+        output_reads_name = params['output_reads_name']
+        output_reads_file = output_reads_name + ".fq"
+        logging.info('Output reads name: ' + output_reads_file)
 
         #metaQUAST
         logging.info('Running metaQUAST')
@@ -69,6 +80,19 @@ class kb_metaQUAST:
         results_file_path = returned_dict['results_file_path']
         logging.info('Results file path: ' + results_file_path)
 
+        # Rename output file via a copy
+        output_reads_filepath = os.path.join(resultsDirectory, output_reads_file)
+        shutil.copy(results_file_path, output_reads_filepath)
+
+        mq_results = upload_reads(self.callback_url, output_reads_filepath, params['workspace_name'], output_reads_name, params['input_reads_ref'], isInterleaved)
+
+        if os.path.exists(resultsDirectory):
+            shutil.rmtree(resultsDirectory)
+
+        objects_created = [{
+                'ref': mq_results,
+                'description': 'metaQuast results?'
+            }]
 
         # Create a report
         report_creator = HTMLReportCreator(self.callback_url)
