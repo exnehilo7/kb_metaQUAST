@@ -35,7 +35,7 @@ def run_metaQUAST(result_dir, report_file):
             f.write(result.stderr)
             f.write("</pre></body></html>")
             
-        print(f"metaQUAST command executed successfully. Output saved to {report_file}\n")
+        print(f"metaQUAST command executed successfully. Report output saved to {report_file}\n")
 
         # Get the file name's prefix to the left of the . from input_file. Ignore the path.
         # prefix = input_file.split('/')[-1].split('.')[0]
@@ -43,7 +43,8 @@ def run_metaQUAST(result_dir, report_file):
         # Return in a dictionary the file names found in the result_dir folder
         return {
             # 'console_report_file': report_file, # No need to return - input parameter is not altered.
-            'results_file_path': result_dir # + '/' + [f for f in os.listdir(result_dir) if prefix in f][0] #,
+            # 'results_file_path': result_dir  + '/' + [f for f in os.listdir(result_dir) if prefix in f][0]
+            'results_file_path': result_dir  + '/report.html'
         }
 
         # return { 'results_file_path': 'chikin' }

@@ -1,14 +1,14 @@
 #
 # define display information
 #
-name: Method Name Here
+name: Run MetaQUAST on assemblies
 
 tooltip: |
-    Perform some kind of method
+    Run QUAST's extension MetaQUAST for metagenomic datasets.
 
 screenshots: []
 
-icon: icon.png
+icon: quast-blue_360.png
 
 #
 # define a set of similar apps that might be useful to the user
@@ -24,13 +24,9 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    parameter_1 :
-        ui-name : |
-            First parameter
-        short-hint : |
-            The first parameter
-        long-hint  : |
-            The first parameter that needs to be entered to drive the method. This might be the first of many.
+    assemblies :
+        ui-name : Assemblies
+        short-hint : One or more Assemblies to be assessed with MetaQUAST
 
 description : |
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar efficitur felis, quis tincidunt sem congue at. Vivamus ornare feugiat faucibus. Fusce tincidunt mattis nunc, nec varius purus convallis quis. Nulla facilisi. In at magna dolor. Suspendisse sit amet felis at arcu auctor dapibus vitae pharetra dui. Nam semper mi quis tortor fermentum mollis. Donec a arcu pharetra, rutrum dolor vitae, rutrum mauris. Donec ornare fringilla sagittis. Nam laoreet est in elementum malesuada. Vestibulum id mi eget urna hendrerit feugiat. Donec et ultrices nulla. Phasellus diam eros, dapibus at tempus nec, semper vel ante.</p>
